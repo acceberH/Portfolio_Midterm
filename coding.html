@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="p5.js"></script>
+	<script type="text/javascript" src="processing.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.0/p5.js"></script>
+    <script language="javascript" type="text/javascript" src="libraries/p5.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/processing.js/1.6.0/processing.min.js"></script>
+	<script type="text/javascript" src="processing.js"></script>
+
+
+      
+
+	<title></title>
+</head>
+<body>
+	
+	<script src="sketch1.js"></script>
+	<body bgcolor="#F5EAD6">
+ 	<div class="topnav">
+        <ul>
+          <a href="index.html">Home</a>
+          <a href="Work.html">Work</a>
+          <a href="About.html">About</a>
+        </ul>
+	</div>
+	<div class="wrapper">
+    <aside class="sidebar">
+      <ul>
+      	<a href="uxr.html" class="sidebar-link">UX Rsearch</a>
+        <a href="uxd.html" class="sidebar-link">UX/UI Design</a>
+        <a href="product.html" class="sidebar-link">Product Design</a>
+        <a href="3d.html" class="sidebar-link">3D Modeling</a>
+        <a href="coding.html" class="sidebar-link">Coding</a>
+      </ul>
+    </aside>
+    <main>
+    <h1 class="page-title">Creative Coding</h1>
+    <div class="portfolio-item">
+    	<h1 class="page-title">Abstract Man</h1>
+      <img src="sketch1.png" alt="Project Image" height="800" width="800">
+	<h1 class="page-title">Moving</h1>
+	<h1 class="page-title">Click to next scene!</h1>
+
+
+    <script type="text/processing">
+		void setup()
+		{
+		  size(700, 700);
+		  rectMode(CENTER); // draw the rectangle using center mode
+		}
+		float theta;//rectangle's moving rate
+		int index=0;
+		void draw() 
+		{
+		  noStroke();
+		  fill(0, 50);
+		  rect(width/2, height/2, width, height); 
+		  theta+=.1; 
+		  //pattern_1
+		  if (index==0) {  
+		    fill(255);
+		    stroke(100);
+		    drawShape(width/2+cos(theta)*50, height/2+sin(theta)*8, 30); //rectangle in the middle
+		    //upper right rect
+		    fill(100);
+		    stroke(255);
+		    drawShape(width/2+80+cos(theta)*50, height/2-80+sin(theta)*5, noise(12, theta)*25);
+		    //upper right small rect
+		    fill(random(255), random(255), random(255));
+		    drawShape(width/2+120+cos(theta)*50, height/2-120+sin(theta)*50, noise(12, theta)*10);
+		    //lower right rect
+		    fill(100);
+		    drawShape(width/2+80+cos(theta)*50, height/2+80+sin(theta)*5, noise(1, theta)*25);
+		    //lower right amll rect
+		    fill(random(255), random(255), random(255));
+		    drawShape(width/2+120+cos(theta)*50, height/2+120+sin(theta)*50, noise(1, theta)*10);
+		    //lower left rect
+		    fill(100);
+		    drawShape(width/2-80+cos(theta)*50, height/2+80+sin(theta)*5, noise(2, theta)*25);
+		    //lower left samll rect
+		    fill(random(255), random(255), random(255));
+		    drawShape(width/2-120+cos(theta)*50, height/2+120+sin(theta)*50, noise(2, theta)*10);
+		    //upper left rect
+		    fill(100);
+		    drawShape(width/2-80+cos(theta)*50, height/2-80+sin(theta)*5, noise(3, theta)*25);
+		    //upper left small rect
+		    fill(random(255), random(255), random(255));
+		    drawShape(width/2-120+cos(theta)*50, height/2-120+sin(theta)*50, noise(3, theta)*10);
+		  }
+		  //pattern_2
+		  if (index==1) 
+		  {
+		    //for loop repeatedly draws the square from large to small
+		    for (float i=120; i>0; i-=step) 
+		    {
+		      fill(i*1.2, step*8, i*1.5, 20);
+		      drawShape(width/2, height/2, i);
+		    }
+		    step+=stepSped; //Step value change
+		    //Set the interval range of the step value
+		    if (step>50||step<5)
+		    {
+		      stepSped*=-1;
+		    }
+		  }
+		  //pattern_3
+		  
+		  if (index==2)
+		  {
+		    //incrementing by 100 pixels each time
+		    for (int x=50; x<width; x+=100) 
+		    {
+		      for (int y=50; y<height; y+=100) 
+		      { 
+		        //Fill gradient color
+		        fill((x+y)%cc, 100, 150);
+		        //fill(255);
+		        noStroke();
+		        float n=angle3%90; //Rotation in radians
+		        float size=map(n, 0, 90, 19, 1); 
+		        drawShape(x, y, size);
+		      }
+		    }
+		    angle3+=angle3sped; //Radian value change
+		    cc-=csped;//color change
+		    //Determine the range of color values
+		    if (cc<10||cc>255) 
+		    {
+		      csped*=-1;
+		    }
+		  }
+		  
+		  
+		  
+		  //Pattern_4
+		  if (index==3) 
+		  {
+		    //draw four squares in 4 different positions
+		    fill(100);
+		    stroke(255);
+		    drawShape(x, 350, 20);
+		    drawShape(x2, 350, 20);
+		    drawShape(350, y, 20);
+		    drawShape(350, y2, 20);
+		    //The four squares are moved left, right, up and down, 10 pixels each time
+		    x+=10;  
+		    x2-=10;
+		    y+=10;
+		    y2-=10;
+		    //Determine the position interval range of the four squares
+		    if (x>width+50)
+		    {
+		      x=50;
+		    }
+		    if (x2<-50) 
+		    {
+		      x2=width-50;
+		    }
+		    if (y>height+50)
+		    {
+		      y=50;
+		    }
+		    if (y2<-50)
+		    {
+		      y2=height-50;
+		    }
+		    //If the distance between blocks is less than 50
+		    if (abs(x-x2)<30||abs(y-y2)<50) 
+		    { 
+		      //Draw two colored squares
+		      stroke(255);
+		      fill(200, 200, 02);
+		      drawShape(width/2, height/2, 80);
+		      fill(100, 200, 100);
+		      drawShape(width/2, height/2, 50);
+		    }
+		  }
+		  //Pattern_5
+		  if (index==4) {
+		    //Define d as the mouse map from 0 to the edge of the canvas to a value from 5 to 80
+		    float d=map(mouseX, 0, width, 5, 80);
+		    //for loop traverses the canvas and increments d*5 each time
+		    for (float i=(d*5)/2; i<width; i+=d*5) {
+		      for (float j=(d*5)/2; j<height; j+=d*5) {
+		        stroke(255);
+		        fill(200, 150, 20);
+		        //draw all the squares
+		        drawShape(i, j, d);
+		      }
+		    }
+		    //The color of the fill changes with the mouse's x y axis
+		    fill(mouseX, mouseY, 100, 50);
+		    //Draw three squares around the mouse
+		    drawShape(mouseX+cos(theta)*50, mouseY+sin(theta)*50, 4);
+		    drawShape(mouseX+cos(theta+2)*38, mouseY+sin(theta+2)*38, 2);
+		    drawShape(mouseX+cos(theta+5)*25, mouseY+sin(theta+5)*25, 2);
+		  }
+		}
+		//Defines the x y initial position of the block
+		float x=50, x2=650;
+		float y=50, y2=650;
+		//Define the step value of the for loop   Step value change speed
+		float step=10, stepSped=0.2;
+		float cc=255; //Defines the initial value of the color hue
+		float csped=0.4;//Defines how fast the hue of the color changes
+		float angle3, angle3sped=1; //Define the radian value of the rotation and the speed at which the radian value changes
+
+		void drawShape( float w, float h, float size)
+		{
+		  rect(w, h, size*5, size*5);
+		}
+		//mouse click function 
+		void mousePressed() {
+		  index++; //The value of index increases by 1 each time the mouse is clicked
+		  if (index>4) { ///Set the maximum value of the index value if it is greater than 4
+		    index=0;// then back to the zero
+		  }//each time I click, the pattern will change to the next one untill it gets to pattern5, then it will get back to pattern 1
+		}
+	</script>
+	<canvas id="sketch" style="border: 1px solid black;"></canvas>
+	<h1 class="page-title">Infinite</h1>
+    <script src="sketch1.js"></script>
+
+    </main>
+
+
+
+
+</body>
+</html>
+
+<link rel="stylesheet" type="text/css" href="style.css">
+<link rel="stylesheet" href="https://use.typekit.net/ddj3ktk.css">
+<link rel="stylesheet" href="https://use.typekit.net/ddj3ktk.css">
+<link rel="stylesheet" type="javascript" href="sketch1.js">
